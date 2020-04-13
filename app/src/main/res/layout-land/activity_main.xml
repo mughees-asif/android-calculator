@@ -164,16 +164,6 @@
         app:layout_constraintStart_toEndOf="@+id/button6" />
 
     <Button
-        android:id="@+id/buttonPlus"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="+"
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonEquals"
-        app:layout_constraintStart_toEndOf="@+id/buttonEquals" />
-
-    <Button
         android:id="@+id/buttonMinus"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
@@ -182,6 +172,16 @@
         android:text="-"
         app:layout_constraintBaseline_toBaselineOf="@+id/button0"
         app:layout_constraintStart_toEndOf="@+id/button0" />
+
+    <Button
+        android:id="@+id/buttonPlus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="+"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonEquals"
+        app:layout_constraintStart_toEndOf="@+id/buttonEquals" />
 
     <Button
         android:id="@+id/buttonDot"
