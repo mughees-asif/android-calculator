@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var result: EditText
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             newNumber.append(b.text)
         }
 
-        // use a for loop
+        // *improvement* use a for loop
         button0.setOnClickListener(listener)
         button1.setOnClickListener(listener)
         button2.setOnClickListener(listener)
@@ -61,5 +62,20 @@ class MainActivity : AppCompatActivity() {
         button8.setOnClickListener(listener)
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
+
+        val opListener = View.OnClickListener { v ->
+            val op = {v as Button}.toString()
+            val value = newNumber.text.toString()
+            if (value.isNotEmpty()) {
+                performOperation(value, op)
+            }
+            pendingOperation = op
+            displayOperation.text = pendingOperation
+        }
+        buttonEquals.setOnClickListener(opListener)
+        buttonDivide.setOnClickListener(opListener)
+        buttonMultiply.setOnClickListener(opListener)
+        buttonPlus.setOnClickListener(opListener)
+        buttonMinus.setOnClickListener(opListener)
     }
 }
