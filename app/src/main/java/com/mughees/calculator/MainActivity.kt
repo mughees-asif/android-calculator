@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         buttonDot.setOnClickListener(listener)
 
         val opListener = View.OnClickListener { v ->
-            val op = {v as Button}.toString()
+            val op = (v as Button).text.toString()
             val value = newNumber.text.toString()
             if (value.isNotEmpty()) {
                 performOperation(value, op)
@@ -77,5 +77,9 @@ class MainActivity : AppCompatActivity() {
         buttonMultiply.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
         buttonMinus.setOnClickListener(opListener)
+    }
+
+    private fun performOperation(value: String, operation: String) {
+        displayOperation.text = operation
     }
 }
