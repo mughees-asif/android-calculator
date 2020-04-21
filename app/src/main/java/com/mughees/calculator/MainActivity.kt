@@ -7,6 +7,10 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
+private const val STATE_PENDING_OPERATION = "PendingOperation"
+private const val STATE_OPERAND = "Operand"
+private const val STATE_OPERAND_STORED = "Operand_Stored"
+
 class MainActivity : AppCompatActivity() {
     private lateinit var result: EditText
     private lateinit var newNumber: EditText
@@ -14,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     // Variables to hold the operands and type of calculations
     private var operand: Double? = null
-    private var operand2: Double = 0.0
     private var pendingOperation = "="
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             newNumber.append(b.text)
         }
 
-        // *improvement* use a for loop
+        // *improvement* use a loop
         button0.setOnClickListener(listener)
         button1.setOnClickListener(listener)
         button2.setOnClickListener(listener)
@@ -64,9 +67,13 @@ class MainActivity : AppCompatActivity() {
 
         val opListener = View.OnClickListener { v ->
             val op = (v as Button).text.toString()
-            val value = newNumber.text.toString()
-            if (value.isNotEmpty()) {
+
+            // fixed: try/catch stops app crashing when . is pressed on its own
+            try {
+                val value = newNumber.text.toString().toDouble()
                 performOperation(value, op)
+            } catch (e: NumberFormatException) {
+                newNumber.setText("")
             }
             pendingOperation = op
             displayOperation.text = pendingOperation
@@ -78,28 +85,48 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
     }
 
-    private fun performOperation(value: String, operation: String) {
+    // calculations
+    private fun performOperation(value: Double, operation: String) {
         if (operand == null) {
-            operand = value.toDouble()
+            operand = value
         } else {
-            operand2 = value.toDouble()
-
             if (pendingOperation == "=") {
                 pendingOperation = operation
             }
             when (pendingOperation) {
-                "=" -> operand = operand2
-                "/" -> if (operand2 == 0.0) {
-                        operand = Double.NaN        // handle attempt to divide by zero
-                    } else {
-                        operand = operand!! / operand2
-                    }
-                "*" -> operand = operand!! * operand2
-                "-" -> operand = operand!! - operand2
-                "+" -> operand = operand!! + operand2
+                "=" -> operand = value
+                "/" -> operand = if (value == 0.0) {
+                    Double.NaN          // handle attempt to divide by zero
+                } else {
+                    operand!! / value
+                }
+                "*" -> operand = operand!! * value
+                "-" -> operand = operand!! - value
+                "+" -> operand = operand!! + value
             }
         }
         result.setText(operand.toString())
         newNumber.setText("")
+    }
+
+    // fixed: saves the state when switching from Portrait to Landscape
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if(operand != null) {
+            outState.putDouble(STATE_OPERAND, operand!!)
+            outState.putBoolean(STATE_OPERAND_STORED, true)
+        }
+        outState.putString(STATE_PENDING_OPERATION, pendingOperation)
+    }
+    // fixed: restores the state when switching from Portrait to Landscape
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        operand = if(savedInstanceState.getBoolean(STATE_OPERAND_STORED, false)) {
+            savedInstanceState.getDouble(STATE_OPERAND)
+        } else {
+            null
+        }
+        pendingOperation = savedInstanceState.getString(STATE_PENDING_OPERATION).toString()
+        displayOperation.text = pendingOperation
     }
 }
