@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var result: EditText
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val buttonEquals: Button = findViewById<Button>(R.id.buttonEquals)
         val buttonMultiply: Button = findViewById<Button>(R.id.buttonMultiply)
         val buttonDivide: Button = findViewById<Button>(R.id.buttonDivide)
-        val buttonAdd: Button = findViewById<Button>(R.id.buttonPlus)
+        val buttonPlus: Button = findViewById<Button>(R.id.buttonPlus)
         val buttonMinus: Button = findViewById<Button>(R.id.buttonMinus)
 
         val listener = View.OnClickListener { v ->

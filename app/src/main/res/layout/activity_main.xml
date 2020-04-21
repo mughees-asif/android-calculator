@@ -185,8 +185,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="-"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button0"
-        app:layout_constraintStart_toEndOf="@+id/button0" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/button3" />
+
 
     <Button
         android:id="@+id/buttonDot"
@@ -195,8 +196,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="."
-        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
-        app:layout_constraintStart_toEndOf="@+id/button3" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/button0"
+        app:layout_constraintStart_toEndOf="@+id/button0" />
+
 
     <Button
         android:id="@+id/buttonEquals"
@@ -205,7 +207,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="="
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonMinus"
-        app:layout_constraintStart_toEndOf="@+id/buttonMinus" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonDot"
+        app:layout_constraintStart_toEndOf="@+id/buttonDot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
