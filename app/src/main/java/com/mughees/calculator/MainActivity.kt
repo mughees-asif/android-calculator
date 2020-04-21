@@ -79,6 +79,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun performOperation(value: String, operation: String) {
+        if (operand == null) {
+            operand = value.toDouble()
+        } else {
+            operand2 = value.toDouble()
+
+            if (pendingOperation == "=") {
+                pendingOperation = operation
+            }
+
+            when (pendingOperation) {
+                "=" -> operand = operand2
+                "/" -> if (operand2 == 0.0) {
+                    operand = Double.NaN        // handle attempt to divide by zero
+                } else {
+                    operand = operand!! / operand2
+                }
+                "*" -> operand = operand!! * operand2
+                "-" -> operand = operand!! - operand2
+                "+" -> operand = operand!! + operand2
+            }
+        }
         displayOperation.text = operation
     }
 }
